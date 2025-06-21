@@ -10,8 +10,9 @@ def receive_data():
         mac_address = data.get("mac_address")
         rssi = data.get("rssi")
         scanner_id = data.get("scanner_id")
+        timestamp= data.get("timestamp")
 
-        print(f"Received from {scanner_id}: {mac_address} -> RSSI {rssi}")
+        print(f"{timestamp} : Received from {scanner_id}: {mac_address} -> RSSI {rssi}")
         return jsonify({"status": "ok"}), 200
     except Exception as e:
         print(f"Error: {e}")
