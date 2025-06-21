@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+import json
 
 app = Flask(__name__)
 
@@ -7,12 +8,11 @@ def receive_data():
     try:
         data = request.get_json()
         print(data)
-        mac_address = data.get("mac_address")
-        rssi = data.get("rssi")
-        scanner_id = data.get("scanner_id")
-        timestamp= data.get("timestamp")
 
-        print(f"{timestamp} : Received from {scanner_id}: {mac_address} -> RSSI {rssi}")
+        with open("readings.jsonl", "a") as f:
+            json.dump(data, f)
+            f.write("\n")  # Newline-delimited JSON
+
         return jsonify({"status": "ok"}), 200
     except Exception as e:
         print(f"Error: {e}")
